@@ -1,11 +1,11 @@
-# Streaming-Kokoro
+# Streaming-KokoroJS
 
 ## About
-Unlimited text-to-speech using Kokoro-JS, 100% local, 100% open source
+Unlimited text-to-speech using [Kokoro-JS](https://github.com/hexgrad/kokoro), 100% local, 100% open source
 
 ## Overview
 
-Streaming-Kokoro is a web-based text-to-speech application that leverages the Kokoro-82M model to generate high-quality speech audio entirely in the browser. The application runs completely locally without requiring any server-side processing or API calls, ensuring privacy and offline functionality.
+Streaming-Kokoro is a web-based text-to-speech application that leverages the Kokoro-82M model to generate high-quality speech audio entirely in the browser. The application runs completely in the browser without requiring any server-side processing or API calls, ensuring privacy and offline functionality.
 
 ## Features
 
@@ -14,7 +14,6 @@ Streaming-Kokoro is a web-based text-to-speech application that leverages the Ko
 - **Streaming Audio Generation**: Processes text in chunks and streams audio as it's generated
 - **Smart Text Chunking**: Intelligently splits text to maintain natural speech patterns
 - **Multiple Voice Styles**: Supports various voice styles for different languages
-- **Adjustable Speed**: Control the speaking rate of the generated speech
 - **Audio Download**: Save generated audio to disk
 - **Fully Open Source**: Every component is open source and freely available
 
@@ -35,9 +34,9 @@ Streaming-Kokoro is a web-based text-to-speech application that leverages the Ko
 4. Enter or paste text into the text area
 5. Click "Play" to stream the audio or "Download" to save it to disk
 
-## Local Development
+## Local Model
 
-When running on localhost, the application can use a local model instead of downloading from HuggingFace:
+The application can use a local model instead of downloading from HuggingFace. Example:
 
 ```
 if (self.location.hostname === "localhost") {
@@ -53,13 +52,14 @@ This project uses the [Kokoro-82M-v1.0-ONNX](https://huggingface.co/onnx-communi
 ## Browser Compatibility
 
 - **Recommended**: Chromium-based browsers with WebGPU support (Chrome, Edge, etc.)
-- **Compatible**: Any modern browser with WebAssembly support
+- **Compatible**: Any modern browser with WebAssembly support. (FireFox seems not to work at the moment.)
 
 ## License
 
-This project is open source. All components, including the Kokoro model implementation, are freely available for personal and commercial use.
+This project is open source under the Apache 2 License.
 
 ## Acknowledgments
 
+- [Kokoro](https://github.com/hexgrad/kokoro)  is an open-weight TTS model with 82 million parameters.
 - [Hugging Face Transformers.js](https://huggingface.co/docs/transformers.js) for the browser-based ML framework
 - [Kokoro-82M Model](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX) for the TTS capabilities
