@@ -16,8 +16,56 @@ let audioPlayer = new AudioPlayer(tts_worker);
 let audioDiskSaver = new AudioDiskSaver();
 let buttonHandler = new ButtonHandler(tts_worker, audioPlayer, audioDiskSaver);
 
-const onMessageReceived = async (e) => {
-  switch (e.data.status) {
+function populateVoiceSelector(voices) {
+  const voiceSelector = document.getElementById("voiceSelector");
+  // Clear any existing options first (except the default)
+  while (voiceSelector.options.length > 1) {
+    voiceSelector.remove(1);
+  }
+
+  // Group voices by category (based on prefix) and gender
+  const voiceGroups = {};
+  
+  for (const [id, voice] of Object.entries(voices)) {
+    // Skip the default voice as it's already in the dropdown
+    if (id === "af") continue;
+    
+    // Get category from ID prefix (e.g., "af_" or "am_")
+    const category = id.split('_')[0];
+    const groupKey = `${category} - ${voice.gender}`;
+    
+    if (!voiceGroups[groupKey]) {
+      voiceGroups[groupKey] = [];
+    }
+    
+    voiceGroups[groupKey].push({ id, name: voice.name, language: voice.language });
+  }
+  
+  // Sort groups alphabetically
+  const sortedGroups = Object.keys(voiceGroups).sort();
+  
+  // Add optgroups and options
+  for (const groupKey of sortedGroups) {
+    const [category, gender] = groupKey.split(' - ');
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = `${gender} Voices (${category.toUpperCase()})`;
+    
+    // Sort voices within the group by name
+    voiceGroups[groupKey].sort((a, b) => a.name.localeCompare(b.name));
+    
+    for (const voice of voiceGroups[groupKey]) {
+      const option = document.createElement('option');
+      option.value = voice.id;
+      option.textContent = `${voice.name} (${voice.language})`;
+      optgroup.appendChild(option);
+    }
+    
+    voiceSelector.appendChild(optgroup);
+  }
+  voiceSelector.disabled = false;
+}
+
+const onMessageReceived = async (e) => {switch (e.data.status) {
     case "loading_model_start":
       console.log(e.data);
       updateProgress(0, "Loading model...");
@@ -26,6 +74,11 @@ const onMessageReceived = async (e) => {
     case "loading_model_ready":
       buttonHandler.enableButtons();
       updateProgress(100, "Model loaded successfully");
+      
+      // Populate voice selector if voices are available
+      if (e.data.voices) {
+        populateVoiceSelector(e.data.voices);
+      }
       break;
 
     case "loading_model_progress":

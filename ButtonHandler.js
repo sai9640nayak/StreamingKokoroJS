@@ -118,10 +118,11 @@ export class ButtonHandler {
         let text = document.getElementById("ta").value;
         updateProgress(0, "Initializing audio streaming...");
 
-        // Set estimated chunks based on text length, similar to disk mode
-        this.audioPlayer.setTotalChunks(text.length / 300); // rough estimate based on chunk size
+        // Set estimated chunks based on text length, similar to disk mode        this.audioPlayer.setTotalChunks(text.length / 300); // rough estimate based on chunk size
 
-        this.worker.postMessage({ type: "generate", text: text, voice: "af" });
+        // Get the selected voice
+        const selectedVoice = document.getElementById("voiceSelector").value;
+        this.worker.postMessage({ type: "generate", text: text, voice: selectedVoice });
     }
     
     async handleDiskButtonClick() {

@@ -14,15 +14,20 @@
   <script src="./main.js" defer type="module"></script>
 </head>
 
-<body>
-  <div class="container">
+<body>  <div class="container">
     <div class="header">
       <h1>Kokoro-JS TTS Streaming</h1>
       <p>This page needs to download a 300 MB text-to-speach model (Kokoro-82M-v1.0-ONNX).</p>
       <p>The model is cached after the first load, so this only happens once.</p>
-    </div>    <div class="text-input">
-      <textarea id="ta" placeholder="Enter or paste text here for TTS conversion..."></textarea>
-    </div>    <div class="button-group">
+    </div>    <div class="text-input">      <textarea id="ta" placeholder="Enter or paste text here for TTS conversion..."></textarea>
+    </div>    <div class="control-panel">
+      <div class="voice-selection">
+        <label for="voiceSelector">Voice:</label>
+        <select id="voiceSelector" disabled>
+          <option value="af">Default</option>
+          <!-- Other voices will be added dynamically -->
+        </select>
+      </div>
       <button id="streamAudioContext" disabled>
         <!-- Play icon -->
         <span class="btn-content play-content">
@@ -87,8 +92,7 @@
             style="margin-right: 8px;" class="spin">
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M12 6v6l4 2"></path>
-          </svg>
-          Processing...
+          </svg>          Processing...
         </span>
       </button>
     </div>

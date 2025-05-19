@@ -1,4 +1,4 @@
-const SAMPLE_RATE = 23000; // a bit slower than 24000
+const SAMPLE_RATE = 24000;
 
 export class AudioDiskSaver {
   constructor() {
