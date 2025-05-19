@@ -19,8 +19,17 @@
       <h1>Kokoro-JS TTS Streaming</h1>
       <p>This page needs to download a 300 MB text-to-speach model (Kokoro-82M-v1.0-ONNX).</p>
       <p>The model is cached after the first load, so this only happens once.</p>
-    </div>    <div class="text-input">      <textarea id="ta" placeholder="Enter or paste text here for TTS conversion..."></textarea>
-    </div>    <div class="control-panel">
+    </div>    <div class="text-input">      <textarea id="ta" placeholder="Enter or paste text here for TTS conversion..."></textarea>    </div>
+
+    <div id="progressContainer" class="footer-section" style="display: none;">
+      <p id="progressLabel">Loading model...</p>
+      <div class="progress-bar">
+        <div id="progressBar" class="progress-bar-fill"></div>
+      </div>
+      <p id="progressStatus">0%</p>
+    </div>
+    
+    <div class="control-panel">
       <div class="voice-selection">
         <label for="voiceSelector">Voice:</label>
         <select id="voiceSelector" disabled>
@@ -93,16 +102,7 @@
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M12 6v6l4 2"></path>
           </svg>          Processing...
-        </span>
-      </button>
-    </div>
-
-    <div id="progressContainer" class="footer-section" style="display: none;">
-      <p id="progressLabel">Loading model...</p>
-      <div class="progress-bar">
-        <div id="progressBar" class="progress-bar-fill"></div>
-      </div>
-      <p id="progressStatus">0%</p>
+        </span>      </button>
     </div>
   </div>
 

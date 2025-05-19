@@ -190,7 +190,7 @@ button.stop-streaming:hover, button.stop-saving:hover {
 
 /* Progress bar styles */
 #progressContainer {
-  margin: 10px 0;
+  margin-bottom: 20px;
   padding: 15px;
   border-radius: var(--border-radius);
   background-color: white;
@@ -235,7 +235,7 @@ button.stop-streaming:hover, button.stop-saving:hover {
 
 /* Footer section */
 .footer-section {
-  margin-top: auto; /* Push to bottom if there's extra space */
+  /* No longer needed to push to bottom since we're no longer at the bottom */
   margin-bottom: 0;
 }
 
