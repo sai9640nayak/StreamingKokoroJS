@@ -1,0 +1,301 @@
+/* this file is loaded by index.html and styles the page */
+
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3a0ca3;
+  --accent-color: #7209b7;
+  --background-color: #f8f9fa;
+  --text-color: #333;
+  --light-gray: #e9ecef;
+  --dark-gray: #6c757d;
+  --success-color: #4CAF50;
+  --danger-color: #e63946;
+  --border-radius: 8px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  padding: 10px; /* Reduced from 20px to give more space */
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh; /* Use full viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3 {
+  margin-bottom: 0.5em;
+  color: var(--primary-color);
+}
+
+.container {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 20px; /* Reduced from 30px */
+  box-shadow: var(--shadow);
+  flex: 1; /* Take up all available space */
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px; /* Reduced from 30px */
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: var(--secondary-color);
+}
+
+.header p {
+  color: var(--dark-gray);
+  font-size: 1.1rem;
+}
+
+/* Text area styling */
+.text-input {
+  flex: 1; /* Take up all available space */
+  display: flex;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none; /* Prevent manual resizing since we're using all available space */
+  font-family: inherit;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  flex: 1; /* Take up all available space */
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+/* Button styling */
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px; /* Reduced from 20px */
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: var(--transition);
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow);
+}
+
+button:disabled {
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Stop button style */
+button.stop-streaming, button.stop-saving {
+  background-color: var(--danger-color);
+}
+
+button.stop-streaming:hover, button.stop-saving:hover {
+  background-color: #d32f2f;
+}
+
+/* Progress bar styles */
+#progressContainer {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: var(--shadow);
+  transition: opacity 0.5s ease;
+}
+
+#progressLabel {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--secondary-color);
+  transition: transform 0.3s ease;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  width: 0%;
+  transition: width 0.3s ease, background-color 0.5s ease;
+}
+
+.progress-bar-fill.success {
+  background-color: var(--success-color);
+}
+
+#progressStatus {
+  text-align: right;
+  font-size: 14px;
+  color: var(--dark-gray);
+  font-weight: 500;
+}
+
+/* Footer section */
+.footer-section {
+  margin-top: auto; /* Push to bottom if there's extra space */
+  margin-bottom: 0;
+}
+
+/* Info section */
+.info-section {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: var(--shadow);
+}
+
+.info-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.info-item:hover {
+  background-color: var(--light-gray);
+}
+
+.info-item b {
+  color: var(--accent-color);
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Animation for the button icons */
+button svg {
+  transition: transform 0.3s ease;
+}
+
+button:hover:not(:disabled) svg {
+  transform: scale(1.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+  }
+  
+  body {
+    padding: 15px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Loading animation for buttons when processing */
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: button-loading-spinner 1s ease infinite;
+  position: absolute;
+}
+
+/* Style for buttons with custom loading state */
+.loading.has-content::after {
+  display: none; /* Don't show the default loading spinner */
+}
+
+/* Button content spans */
+.btn-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Spinning animation for SVG elements */
+.spin {
+  animation: spin-animation 1.5s linear infinite;
+}
+
+@keyframes spin-animation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

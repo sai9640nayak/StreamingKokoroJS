@@ -1,0 +1,116 @@
+import { updateProgress } from "./updateProgress.js";
+import { AudioPlayer } from "./AudioPlayer.js";
+import { AudioDiskSaver } from "./AudioDiskSaver.js";
+import { ButtonHandler } from "./ButtonHandler.js";
+
+if (window.location.hostname === "localhost") {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./service-worker.js").then(() => {
+      console.log("Service Worker registered.");
+    });
+  }
+}
+
+let tts_worker = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
+let audioPlayer = new AudioPlayer(tts_worker);
+let audioDiskSaver = new AudioDiskSaver();
+let buttonHandler = new ButtonHandler(tts_worker, audioPlayer, audioDiskSaver);
+
+const onMessageReceived = async (e) => {
+  switch (e.data.status) {
+    case "loading_model_start":
+      console.log(e.data);
+      updateProgress(0, "Loading model...");
+      break;
+
+    case "loading_model_ready":
+      buttonHandler.enableButtons();
+      updateProgress(100, "Model loaded successfully");
+      break;
+
+    case "loading_model_progress":
+      let progress = Number(e.data.progress) * 100;
+      if (isNaN(progress)) progress = 0;
+      updateProgress(progress, `Loading model: ${Math.round(progress)}%`);
+      break;
+
+    case "stream_audio_data":
+      if (buttonHandler.getMode() === "disk") {
+        const percent = await audioDiskSaver.addAudioChunk(e.data.audio);
+        updateProgress(percent, "Processing audio for saving...");
+        // Update the disk button to the stop state if it's still loading
+        buttonHandler.updateDiskButtonToStop();
+        // Notify worker when buffer has been processed in disk mode
+        tts_worker.postMessage({ type: "buffer_processed" });
+      } else if (buttonHandler.getMode() === "stream") {
+        // Update the stream button to the stop state if it's still loading
+        buttonHandler.updateStreamButtonToStop();
+        // In stream mode, the buffer_processed notification is actually handled in AudioPlayer.js.
+        // as well as the updateProgress() call.
+        await audioPlayer.queueAudio(e.data.audio);
+      }
+      break;
+
+    case "complete":
+      if (buttonHandler.getMode() === "disk") {
+        try {
+          updateProgress(99, "Combining audio chunks...");
+          updateProgress(99.5, "Writing file to disk...");
+          await audioDiskSaver.finalizeSave();
+          updateProgress(100, "File saved successfully!");
+        } catch (error) {
+          console.error("Error combining audio chunks:", error);
+          updateProgress(100, "Error saving file!");
+        }
+        buttonHandler.setMode("none");
+        // Reset the disk button state after saving is complete
+        buttonHandler.resetDiskButton();
+        document.getElementById("streamAudioContext").disabled = false;
+      } else if (buttonHandler.getMode() === "stream") {
+        // Only reset streaming state when complete is received and we're still in streaming mode
+        buttonHandler.setStreaming(false);
+        buttonHandler.setMode("none");
+        updateProgress(100, "Streaming complete");
+
+        // Use resetStreamButton instead of enableButtons
+        buttonHandler.resetStreamButton();
+        document.getElementById("streamDisk").disabled = false;
+      } else {
+        // For any other mode, use the standard enableButtons function
+        buttonHandler.enableButtons();
+      }
+      break;
+  }
+};
+
+const onErrorReceived = (e) => {
+  console.error("Worker error:", e);
+  // Get the current mode before resetting it
+  const currentMode = buttonHandler.getMode();
+  buttonHandler.setStreaming(false);
+  buttonHandler.setMode("none");
+  updateProgress(100, "An error occurred! Please try again.");
+  
+  // Reset the appropriate button based on the mode we were in
+  if (currentMode === "disk") {
+    buttonHandler.resetDiskButton();
+    document.getElementById("streamAudioContext").disabled = false;
+  } else {
+    buttonHandler.resetStreamButton();
+    document.getElementById("streamDisk").disabled = false;
+  }
+};
+
+tts_worker.addEventListener("message", onMessageReceived);
+tts_worker.addEventListener("error", onErrorReceived);
+
+document.addEventListener('DOMContentLoaded', async () => {
+  updateProgress(0, "Initializing Kokoro model...");
+  document.getElementById("progressContainer").style.display = "block";
+  document.getElementById("ta").value = await (await fetch('./end.txt')).text();
+  buttonHandler.init();
+});
+
+window.addEventListener("beforeunload", () => {
+  audioPlayer.close();
+});

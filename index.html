@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kokoro TTS streaming demo">
+  <title>Kokoro TTS</title>  <link id="favicon" rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23009688;stop-opacity:1' /><stop offset='100%' style='stop-color:%2300BCD4;stop-opacity:1' /></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23grad)' stroke='%23FFF' stroke-width='2'/><rect x='32' y='30' width='10' height='40' rx='2' fill='white' opacity='0.9'/><rect x='47' y='20' width='10' height='60' rx='2' fill='white' opacity='0.9'/><rect x='62' y='35' width='10' height='30' rx='2' fill='white' opacity='0.9'/><path d='M77 35 Q90 50 77 65' stroke='white' stroke-width='3' fill='none' stroke-linecap='round'/><path d='M82 25 Q100 50 82 75' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' opacity='0.7'/></svg>"
+    type="image/svg+xml">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/main.js" defer type="module"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Kokoro-JS TTS Streaming</h1>
+      <p>This page needs to download a 300 MB text-to-speach model (Kokoro-82M-v1.0-ONNX).</p>
+      <p>The model is cached after the first load, so this only happens once.</p>
+    </div>    <div class="text-input">
+      <textarea id="ta" placeholder="Enter or paste text here for TTS conversion..."></textarea>
+    </div>    <div class="button-group">
+      <button id="streamAudioContext" disabled>
+        <!-- Play icon -->
+        <span class="btn-content play-content">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="margin-right: 8px;">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          Stream to Speakers
+        </span>
+
+        <!-- Stop icon -->
+        <span class="btn-content stop-content" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="margin-right: 8px;">
+            <rect x="6" y="6" width="12" height="12"></rect>
+          </svg>
+          Stop Streaming
+        </span>
+
+        <!-- Loading icon -->
+        <span class="btn-content loading-content" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="margin-right: 8px" class="spin">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+          Processing...
+        </span>
+      </button>
+
+      <button id="streamDisk" disabled>
+
+        <!-- Download icon -->
+        <span class="btn-content download-content">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="margin-right: 8px;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Download Audio
+        </span>
+
+        <!-- Stop icon for download -->
+        <span class="btn-content stop-content" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="margin-right: 8px;">
+            <rect x="6" y="6" width="12" height="12"></rect>
+          </svg>
+          Stop Saving
+        </span>
+
+        <!-- Loading icon for download -->
+        <span class="btn-content download-loading-content" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="margin-right: 8px;" class="spin">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+          Processing...
+        </span>
+      </button>
+    </div>
+
+    <div id="progressContainer" class="footer-section" style="display: none;">
+      <p id="progressLabel">Loading model...</p>
+      <div class="progress-bar">
+        <div id="progressBar" class="progress-bar-fill"></div>
+      </div>
+      <p id="progressStatus">0%</p>
+    </div>
+  </div>
+
+</body>
+
+</html>
