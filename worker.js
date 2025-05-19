@@ -7,7 +7,7 @@ self.postMessage({ status: "loading_model_start", device });
 
 let model_id = "onnx-community/Kokoro-82M-v1.0-ONNX";
 
-if (self.location.hostname === "localhost") {
+if (self.location.hostname === "localhost2") {
   env.allowLocalModels = true;
   model_id = "./my_model/";
 }

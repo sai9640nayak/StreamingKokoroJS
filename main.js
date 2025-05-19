@@ -18,48 +18,56 @@ let buttonHandler = new ButtonHandler(tts_worker, audioPlayer, audioDiskSaver);
 
 function populateVoiceSelector(voices) {
   const voiceSelector = document.getElementById("voiceSelector");
-  // Clear any existing options first (except the default)
-  while (voiceSelector.options.length > 1) {
-    voiceSelector.remove(1);
+  // Clear any existing options
+  while (voiceSelector.options.length > 0) {
+    voiceSelector.remove(0);
   }
 
   // Group voices by category (based on prefix) and gender
   const voiceGroups = {};
-  
+  let heartVoice = null;
+
   for (const [id, voice] of Object.entries(voices)) {
-    // Skip the default voice as it's already in the dropdown
-    if (id === "af") continue;
-    
-    // Get category from ID prefix (e.g., "af_" or "am_")
+    if (id === "af_heart") {
+      heartVoice = { id, name: voice.name, language: voice.language };
+      continue;
+    }
     const category = id.split('_')[0];
     const groupKey = `${category} - ${voice.gender}`;
-    
     if (!voiceGroups[groupKey]) {
       voiceGroups[groupKey] = [];
     }
-    
     voiceGroups[groupKey].push({ id, name: voice.name, language: voice.language });
   }
-  
+
   // Sort groups alphabetically
   const sortedGroups = Object.keys(voiceGroups).sort();
-  
+
   // Add optgroups and options
   for (const groupKey of sortedGroups) {
     const [category, gender] = groupKey.split(' - ');
     const optgroup = document.createElement('optgroup');
     optgroup.label = `${gender} Voices (${category.toUpperCase()})`;
-    
     // Sort voices within the group by name
     voiceGroups[groupKey].sort((a, b) => a.name.localeCompare(b.name));
-    
+    // If this is the AF Female group, insert Heart at the top
+    if (category === "af" && gender === "Female" && heartVoice) {
+      const option = document.createElement('option');
+      option.value = heartVoice.id;
+      option.textContent = `${heartVoice.name} (${heartVoice.language})`;
+      option.selected = true;
+      optgroup.appendChild(option);
+    }
     for (const voice of voiceGroups[groupKey]) {
       const option = document.createElement('option');
       option.value = voice.id;
       option.textContent = `${voice.name} (${voice.language})`;
+      // If Heart wasn't found, select the first option
+      if (!heartVoice && voiceSelector.options.length === 0) {
+        option.selected = true;
+      }
       optgroup.appendChild(option);
     }
-    
     voiceSelector.appendChild(optgroup);
   }
   voiceSelector.disabled = false;
