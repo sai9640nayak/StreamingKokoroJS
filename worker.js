@@ -2,7 +2,16 @@ import { KokoroTTS } from "./kokoro.js";
 import { env } from "./transformers.min.js";
 import { splitTextSmart } from "./semantic-split.js";
 
-const device = await navigator.gpu.requestAdapter().then(adapter => !!adapter).catch(() => false) ? "webgpu" : "wasm";
+async function detectWebGPU() {
+  try {
+    const adapter = await navigator.gpu.requestAdapter();
+    return !!adapter;
+  } catch (e) {
+    return false;
+  }
+}
+
+const device = await detectWebGPU() ? "webgpu" : "wasm";
 self.postMessage({ status: "loading_model_start", device });
 
 let model_id = "onnx-community/Kokoro-82M-v1.0-ONNX";
